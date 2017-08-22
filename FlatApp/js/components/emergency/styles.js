@@ -95,7 +95,12 @@ contactText: {
    fontWeight: 'bold',
   },
     contact: {
-         backgroundColor: '#66cc99',
-         margin:5,
+        backgroundColor: '#66cc99',
+        marginLeft:5,
+        marginTop:5,
+        marginRight:5
+    },
+    list:{
+        margin:3,
     },
 };
