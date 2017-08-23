@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { Image, View } from 'react-native';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { Container, Header, Left, Body, Right, Button, Icon } from 'native-base';
 import { openDrawer } from '../../actions/drawer';
@@ -34,9 +34,14 @@ class Channels extends Component {
       <Container>
         <Header>
           <Left>
-            <Button transparent onPress={() => Actions.pop()}>
-              <Icon active name="arrow-back" />
+        <Button
+              transparent
+              style={styles.btnHeader}
+              onPress={() => Actions.login({ type: ActionConst.RESET  })}
+            >
+              <Icon active name="power" />
             </Button>
+           
           </Left>
           <Body>
             <Image source={headerLogo} style={styles.imageHeader} />
@@ -48,17 +53,22 @@ class Channels extends Component {
           </Right>
         </Header>
         <View style={styles.bgHead}>
-
-          <ScrollableTabView renderTabBar={() => <CustomTabBar someProp={'here'} />}>
-            <TabOne tabLabel="Incidents" />
-         
-          </ScrollableTabView>
+            
+          <TabOne tabLabel="Incidents" />
+        
         </View>
       </Container>
     );
   }
 }
 
+// <Button transparent onPress={() => Actions.pop()}>
+//              <Icon active name="arrow-back" />
+//            </Button>
+//  <ScrollableTabView renderTabBar={() => <CustomTabBar someProp={'here'} />}>
+//            <TabOne tabLabel="Incidents" />
+//         
+//          </ScrollableTabView>
 function bindAction(dispatch) {
   return {
     openDrawer: () => dispatch(openDrawer()),

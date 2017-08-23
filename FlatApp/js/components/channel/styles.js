@@ -94,5 +94,11 @@ export default {
   },
   formItem:{
       marginBottom:8,
-  }
+  },
+  categoryTitle:{
+    height: 25,
+    textAlign: 'center',
+    backgroundColor:'#00cc96',
+      fontWeight: 'bold',
+  },
 };

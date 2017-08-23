@@ -30,12 +30,8 @@ class Home extends Component {
       <Container style={{ backgroundColor: '#fff' }}>
         <Header>
           <Left>
-           <Button
-              transparent
-              style={styles.btnHeader}
-              onPress={() => Actions.login({ type: ActionConst.RESET  })}
-            >
-              <Icon active name="power" />
+        <Button transparent onPress={() => Actions.channels()}>
+              <Icon active name="arrow-back" />
             </Button>
           </Left>
           <Body>

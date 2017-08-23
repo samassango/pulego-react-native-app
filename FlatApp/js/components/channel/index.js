@@ -5,7 +5,7 @@ import { Image, View, TouchableOpacity, Platform, StyleSheet, PixelRatio } from 
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux'; 
 
-import { Container, Header, Content, Text, Button, Icon, Left, Right, Body, Form, Item, Input, Picker, Textarea, Switch, ListItem, CheckBox,Label } from 'native-base';
+import { Container, Header, Content, Text, Button, Icon, Left, Right, Body, Form, Item, Input, Picker, Textarea, Switch, ListItem, CheckBox,Label, Toast } from 'native-base';
 import { Grid, Col } from 'react-native-easy-grid';
 import { openDrawer } from '../../actions/drawer';
 
@@ -178,17 +178,37 @@ _postIncidentReport(){
 _validateInputsFields(){
     let _isValidInputs = false;
     if(!this.state.description){
-       this.setState({descriptionError:"Details cannot be empty."})
+        Toast.show({
+              text: "Details cannot be empty.",
+              position: 'bottom',
+              buttonText: 'Okay'
+            });
+       //this.setState({descriptionError:"Details cannot be empty."})
     }else{
         if(!this.state.cantactNo){
-            this.setState({cantactNoError:"Phone number cannot be empty."})
+               Toast.show({
+              text: "Phone number cannot be empty.",
+              position: 'bottom',
+              buttonText: 'Okay'
+            });
+            //this.setState({cantactNoError:"Phone number cannot be empty."})
         }else{
             if(this.state.cantactNo.length !== 10){
                 console.log("Length>>>>",this.state.cantactNo.length)
-               this.setState({cantactNoError:"Phone number cannot be more or less than 10 digits."})
+             Toast.show({
+              text: "Phone number cannot be more or less than 10 digits.",
+              position: 'bottom',
+              buttonText: 'Okay'
+            });
+               //this.setState({cantactNoError:"Phone number cannot be more or less than 10 digits."})
              }else{
                if(this.state.locationState ===false && this.state.strAddress!== null){
-                     this.setState({strAddressError:"Address cannot be empty."})
+                    Toast.show({
+                      text: "Address cannot be empty.",
+                      position: 'bottom',
+                      buttonText: 'Okay'
+                    });
+                     //sthis.setState({strAddressError:"Address cannot be empty."})
                 }else{
                      _isValidInputsv = true;
                 }
@@ -236,12 +256,13 @@ _onChangeLocationState(){
                     </Text>
                                 } </View>
      //onPress={() => Actions.story()} <TouchableOpacity style={{ flexDirection: 'row' }} >
+         // style={Platform.OS === 'android' ? styles.achannelHeader : styles.ioschannelHeader}
     return (
       <Container>
         <Image source={require('../../../images/glow2.png')} style={styles.container} >
           <Header>
             <Left>
-              <Button transparent onPress={() => Actions.pop()}>
+              <Button transparent onPress={() => Actions.channels()}>
                 <Icon active name="arrow-back" />
               </Button>
             </Left>
@@ -256,30 +277,12 @@ _onChangeLocationState(){
           </Header>
 
           <Content showsVerticalScrollIndicator={false}>
-            <View>
-              <Image source={require('../../../images/NewsIcons/2.jpg')} style={styles.newsPoster}>
-                <View>
-                  <Text style={Platform.OS === 'android' ? styles.achannelHeader : styles.ioschannelHeader}>{category.name}</Text>
-                  <Button
-                    rounded
-                    style={styles.followBtn}
-                  >
-                    <Text
-                      style={Platform.OS === 'android' ?
-                      { color: primary, fontSize: 13, fontWeight: '900', textAlign: 'center' } :
-                      { color: primary, fontSize: 13, fontWeight: '900' }}
-                    >Following</Text>
-                  </Button>
-                  <TouchableOpacity style={{ padding: 0 }}>
-                    <Text style={styles.noOfFollowers}>234K Followers</Text>
-                  </TouchableOpacity>
-                </View>
-              </Image>
+            <View style={styles.categoryTitle} >
+                <Text style={Platform.OS === 'android' ? styles.achannelHeader : styles.ioschannelHeader}>{category.name}</Text>
             </View>
 
             <View foregroundColor={'white'} style={{ backgroundColor: '#fff' }}>
-                
-               
+        
                 <View style={styles.newsContentWrap}>
                   <Text numberOfLines={2} style={styles.newsHeader}>
                                         Select Type
@@ -312,7 +315,7 @@ _onChangeLocationState(){
                     <ListItem style={styles.formItem}>
 
                         <Left>
-                          <Text  style={{ color: '#000000' }}>In the scene. </Text>
+                          <Text  style={{ color: '#000000' }}>At the scene. </Text>
                         </Left>
                             <Right>
                              <CheckBox checked={this.state.locationState} onPress={this._onChangeLocationState.bind(this)} />
@@ -335,7 +338,7 @@ _onChangeLocationState(){
                           <Label style={{ color: '#ff0000', fontSize: 10 }}>{this.state.cantactNoError}</Label>
                       </Item>
                      <Item style={styles.formItem} rounded inlineLabel>
-                        <Input  keyboardType = 'numeric' maxLength={10}  minLength={10} placeholder="contact number" onChangeText={cantactNo => this.setState({ cantactNo:cantactNo, cantactNoError:null })} value={this.state.cantactNo} />
+                        <Input  keyboardType = 'numeric' maxLength={10}  minLength={10} placeholder="Your contact number" onChangeText={cantactNo => this.setState({ cantactNo:cantactNo, cantactNoError:null })} value={this.state.cantactNo} />
                           <Label style={{ color: '#ff0000', fontSize: 10 }}>{this.state.cantactNoError}</Label>
                       </Item>
         
@@ -370,4 +373,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, bindAction)(Channel);
-
