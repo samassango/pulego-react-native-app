@@ -23,6 +23,7 @@ class Channel extends Component {
   constructor(props) {
     super(props);
     this.state = {
+        showToast: false,
         accessToken:this.props.currentUser.id,
       selectedType: "key1323",
       incidentTypes:[],
@@ -152,63 +153,54 @@ _getLocationByAddressAsync = async () => {
   };
 
 _postIncidentReport(){
-    let accessToken = this.state.accessToken;
-    //"refNumber":'',
-    let params = {"refNumber":'09898',
-                  "areaId":'0',
-                  "regionId":'0',
-                  "channelId":'5981c1bada29000011ee94bc',
-                  "categoryId":  this.props.appState.categoryReducer.selectedCategory.categoryId,
-                  "subCategoryId": this.state.subCategoryId,
-                  "description": this.state.description,
-                  "mobile": 0,
-                  "deviceId": Constants.deviceId,
-                  "location": this.state.strAddress,
-                  "lat": this.state.latitude,
-                  "lot": this.state.longitude,
-                  "mobileno": this.state.cantactNo,
-                  reportedBy: this.state.reportedBy,
-                }
-    if(this._validateInputsFields()){
-        this.props.reportIncidents(params,accessToken);
-    }
+    Alert.alert(
+  'Alert Title',
+  'My Alert Msg',
+  [
+    {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+    {text: 'OK', onPress: () => console.log('OK Pressed')},
+  ],
+  { cancelable: false }
+)
+    
+        let accessToken = this.state.accessToken;
+        //"refNumber":'',
+        let params = {"refNumber":'09898',
+                      "areaId":'0',
+                      "regionId":'0',
+                      "channelId":'5981c1bada29000011ee94bc',
+                      "categoryId":  this.props.appState.categoryReducer.selectedCategory.categoryId,
+                      "subCategoryId": this.state.subCategoryId,
+                      "description": this.state.description,
+                      "mobile": 0,
+                      "deviceId": Constants.deviceId,
+                      "location": this.state.strAddress,
+                      "lat": this.state.latitude,
+                      "lot": this.state.longitude,
+                      "mobileno": this.state.cantactNo,
+                      reportedBy: this.state.reportedBy,
+                    }
+        if(this._validateInputsFields()){
+            this.props.reportIncidents(params,accessToken);
+        }
+
     
     return ;
 }
 _validateInputsFields(){
     let _isValidInputs = false;
     if(!this.state.description){
-        Toast.show({
-              text: "Details cannot be empty.",
-              position: 'bottom',
-              buttonText: 'Okay'
-            });
-       //this.setState({descriptionError:"Details cannot be empty."})
+        alert('Error:>>> Details cannot be empty.');
     }else{
         if(!this.state.cantactNo){
-               Toast.show({
-              text: "Phone number cannot be empty.",
-              position: 'bottom',
-              buttonText: 'Okay'
-            });
-            //this.setState({cantactNoError:"Phone number cannot be empty."})
+            alert('Error:>>> Phone number cannot be empty.');
         }else{
             if(this.state.cantactNo.length !== 10){
-                console.log("Length>>>>",this.state.cantactNo.length)
-             Toast.show({
-              text: "Phone number cannot be more or less than 10 digits.",
-              position: 'bottom',
-              buttonText: 'Okay'
-            });
-               //this.setState({cantactNoError:"Phone number cannot be more or less than 10 digits."})
+                alert('Error:>>> Phone number cannot be more or less than 10 digits.');
              }else{
                if(this.state.locationState ===false && this.state.strAddress!== null){
-                    Toast.show({
-                      text: "Address cannot be empty.",
-                      position: 'bottom',
-                      buttonText: 'Okay'
-                    });
-                     //sthis.setState({strAddressError:"Address cannot be empty."})
+                   alert('Error:>>> Address cannot be empty.');
                 }else{
                      _isValidInputsv = true;
                 }
@@ -275,20 +267,17 @@ _onChangeLocationState(){
               </Button>
             </Right>
           </Header>
-
-          <Content showsVerticalScrollIndicator={false}>
             <View style={styles.categoryTitle} >
-                <Text style={Platform.OS === 'android' ? styles.achannelHeader : styles.ioschannelHeader}>{category.name}</Text>
+                <Text style={{ fontWeight: 'bold',  alignSelf: 'center'}}>{category.name}</Text>
             </View>
+          <Content showsVerticalScrollIndicator={false}>
+        
 
             <View foregroundColor={'white'} style={{ backgroundColor: '#fff' }}>
         
                 <View style={styles.newsContentWrap}>
-                  <Text numberOfLines={2} style={styles.newsHeader}>
-                                        Select Type
-                                    </Text>
-                  <Form>
-                                         
+                    <Form>
+                  <Text numberOfLines={2} style={styles.newsHeader}>Select Type</Text>                
                         <Picker
                         style={styles.formItem}
                           iosHeader="Select type"
@@ -334,7 +323,7 @@ _onChangeLocationState(){
                                 } 
                     </View>
                      <Item style={styles.formItem} rounded inlineLabel>
-                        <Input  placeholder="Your name" onChangeText={reportedBy => this.setState({ reportedBy:reportedBy, reportedByError:null })} value={this.state.reportedBy} />
+                        <Input  placeholder="Your name (optional)" onChangeText={reportedBy => this.setState({ reportedBy:reportedBy, reportedByError:null })} value={this.state.reportedBy} />
                           <Label style={{ color: '#ff0000', fontSize: 10 }}>{this.state.cantactNoError}</Label>
                       </Item>
                      <Item style={styles.formItem} rounded inlineLabel>

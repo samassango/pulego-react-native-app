@@ -4,6 +4,7 @@ const React = require('react-native');
 const { StyleSheet, Dimensions, Platform } = React;
 
 const deviceHeight = Dimensions.get('window').height;
+const deviceWidth = Dimensions.get('window').width;
 
 export default {
   container: {
@@ -47,6 +48,7 @@ export default {
   newsContentWrap: {
     flexDirection: 'column',
     paddingTop: 20,
+    paddingBottom: 20,
     paddingLeft: 20,
     paddingRight: 20,
     flex: 1,
@@ -97,8 +99,7 @@ export default {
   },
   categoryTitle:{
     height: 25,
-    textAlign: 'center',
+    width: deviceWidth,
     backgroundColor:'#00cc96',
-      fontWeight: 'bold',
   },
 };
