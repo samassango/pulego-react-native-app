@@ -1,8 +1,8 @@
 {
-  "packagerPort": 19004,
-  "packagerPid": 5512,
-  "expoServerPort": 19003,
-  "expoServerNgrokUrl": "https://39-axr.samassango.flatapp.exp.direct",
-  "packagerNgrokUrl": "https://packager.39-axr.samassango.flatapp.exp.direct",
-  "ngrokPid": 7348
+  "packagerPort": 19007,
+  "packagerPid": 13324,
+  "expoServerPort": 19004,
+  "expoServerNgrokUrl": "https://cp-qgn.samassango.flatapp.exp.direct",
+  "packagerNgrokUrl": "https://packager.cp-qgn.samassango.flatapp.exp.direct",
+  "ngrokPid": 13596
 }

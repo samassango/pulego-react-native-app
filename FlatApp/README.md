@@ -11,3 +11,7 @@ Follow the documentation to install and get started with the development:
 Please do check `FAQs` section in docs for queries.
 
 Happy coding!
+
+For initiating call
+To Initiate a phone call in React Native, We using this doc.
+- [Documentation](https://github.com/tiaanduplessis/react-native-phone-call)

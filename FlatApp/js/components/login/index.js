@@ -27,7 +27,7 @@ class Login extends Component {
       username: '',
       password: '',
     errorMessage:'',
-    isLogging:false,
+    isLogging:'unActive',
     deviceId:''
     };
     this.constructor.childContextTypes = {
@@ -38,11 +38,12 @@ componentWillMount(){
     this.setState({deviceId:Constants.deviceId});
 }
     authenticateUser(){
-        let isLoading = true;
-        this.setState({ 
-            isLogging:isLoading, 
+        let isLoading = 'Active';
+       // console.log("IsLoading",isLoading)
+        this.setState({
+            isLogging: isLoading, 
         });
-        console.log("LocalState1",this.state)
+//        console.log("LocalState1",this.state)
         if(this.validateInputs()){
             
             console.log("user logging in!!!!",this.props.login.currentUser);
@@ -58,16 +59,16 @@ componentWillMount(){
         
     }
 validateInputs(){
-    this.setState({isLogging:true});
-    
+    this.setState({isLogging:'Active'});
+//    console.log("IsLoading22",this.state.isLogging)
     if(this.state.username){
        if(this.state.password){
            return true;
        }else{
-            this.setState({isLogging:false});
+            this.setState({isLogging:'unActive'});
        }
     }else{
-         this.setState({isLogging:false});   
+         this.setState({isLogging:'unActive'});   
     }
     return false;
 }
@@ -78,10 +79,10 @@ validateInputs(){
             Actions.walkthrough({ username: this.state.username, password: this.state.password }); 
         }
       
-      console.log("login",this.props.login);
-       console.log("DEVICE_ID", Constants.deviceId, Constants.deviceName);
-      console.log('localState', this.state)
-      console.log("this.state.isLogging ",this.state.isLogging )
+//      console.log("login",this.props.login);
+//       console.log("DEVICE_ID", Constants.deviceId, Constants.deviceName);
+//      console.log('localState', this.state)
+//      console.log("this.state.isLogging ",this.state.isLogging )
       let errorMessage = (this.props.login.loginError.hasOwnProperty("error"))? this.props.login.loginError.error.message : '';
     return (
       <Container>
@@ -125,7 +126,7 @@ validateInputs(){
               </Button>
      
            <View>
-              {( this.state.isLogging === true)? <Spinner />:<Text>{errorMessage}</Text>
+              {( this.state.isLogging === 'Active')? <Spinner />:<Text>{errorMessage}</Text>
               }
            </View>
               <View style={styles.otherLinksContainer}>

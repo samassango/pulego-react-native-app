@@ -15,6 +15,7 @@ import styles from './styles';
 const deviceWidth = Dimensions.get('window').width;
 const headerLogo = require('../../../images/Header-Logo.png');
 
+import { loadNotificationsRequest }  from '../../actions/notificationAction';
 
 class Home extends Component {
 
@@ -24,8 +25,19 @@ class Home extends Component {
       key: React.PropTypes.string,
     }),
   }
+  constructor(props){
+      super(props);
+      this.state ={
+          accessToken: this.props.currentUser.id,
+      };
+  }
+componentDidMount(){
+    this.props.loadNotificationsRequest(this.state.accessToken)
+}
+
 
   render() {
+      console.log("notifications", this.props.notifications)
     return (
       <Container style={{ backgroundColor: '#fff' }}>
         <Header>
@@ -45,93 +57,7 @@ class Home extends Component {
         </Header>
 
         <Content showsVerticalScrollIndicator={false}>
-          <View>
-            <View>
-              <Swiper
-                height={330}
-                width={deviceWidth + 3}
-                loop
-                dot={<View style={styles.swiperDot} />}
-                activeDot={<View
-                  style={styles.swiperActiveDot}
-                  showsButtons
-                />}
-              >
-                <TouchableOpacity activeOpacity={1} onPress={() => Actions.story()} style={styles.slide}>
-                  <Image style={styles.newsPoster} source={require('../../../images/NewsIcons/Splash_Screen.jpg')} >
-                    <View style={styles.swiperTextContent} >
-                      <Text numberOfLines={2} style={styles.newsPosterHeader}>
-                          Tshwane Safety App is designed to bring safety to your hands.
-                        </Text>
-                      <Grid style={styles.swiperContentBox}>
-                        <Col style={{ flexDirection: 'row' }}>
-                          <TouchableOpacity>
-                            <Text style={styles.newsPosterLink}>SPACE.com</Text>
-                          </TouchableOpacity>
-                          <Icon name="ios-time-outline" style={styles.headertimeIcon} />
-                          <Text style={styles.newsPosterLink}>20m ago</Text>
-                        </Col>
-                        <Col>
-                          <TouchableOpacity style={styles.newsPosterTypeView}>
-                            <Text style={styles.newsPosterTypeText}>Tshwane</Text>
-                          </TouchableOpacity>
-                        </Col>
-                      </Grid>
-                    </View>
-                  </Image>
-                </TouchableOpacity>
-
-                <TouchableOpacity  activeOpacity={1} onPress={() => Actions.story()} style={styles.slide}>
-                  <Image style={styles.newsPoster} source={require('../../../images/NewsIcons/3.jpg')}>
-                    <View style={styles.swiperTextContent}>
-                      <Text numberOfLines={2} style={styles.newsPosterHeader}>
-                            So that the applications are able to load faster and resize easily.
-                        </Text>
-                      <Grid style={styles.swiperContentBox}>
-                        <Col style={{ flexDirection: 'row' }}>
-                          <TouchableOpacity>
-                            <Text style={styles.newsPosterLink}>CDC</Text>
-                          </TouchableOpacity>
-                          <Icon name="ios-time-outline" style={styles.headertimeIcon} />
-                          <Text style={styles.newsPosterLink}>2hr ago</Text>
-                        </Col>
-                        <Col>
-                          <TouchableOpacity style={styles.newsPosterTypeView}>
-                            <Text style={styles.newsPosterTypeText}>ENVIRONMENT</Text>
-                          </TouchableOpacity>
-                        </Col>
-                      </Grid>
-                    </View>
-                  </Image>
-                </TouchableOpacity>
-
-                <TouchableOpacity activeOpacity={1} onPress={() => Actions.story()} style={styles.slide}>
-                  <Image style={styles.newsPoster} source={require('../../../images/NewsIcons/4.jpg')}>
-                    <View style={styles.swiperTextContent}>
-                      <Text numberOfLines={2} style={styles.newsPosterHeader}>
-                            But still look sharp on high-definition screens.
-                        </Text>
-                      <Grid style={styles.swiperContentBox}>
-                        <Col style={{ flexDirection: 'row' }}>
-                          <TouchableOpacity>
-                            <Text style={styles.newsPosterLink}>SKY.com</Text>
-                          </TouchableOpacity>
-                          <Icon name="ios-time-outline" style={styles.headertimeIcon} />
-                          <Text style={styles.newsPosterLink}>1day ago</Text>
-                        </Col>
-                        <Col>
-                          <TouchableOpacity style={styles.newsPosterTypeView}>
-                            <Text style={styles.newsPosterTypeText}>WORLD</Text>
-                          </TouchableOpacity>
-                        </Col>
-                      </Grid>
-                    </View>
-                  </Image>
-                </TouchableOpacity>
-              </Swiper>
-            </View>
-          </View>
-
+        
           <Card style={{ backgroundColor: '#fff', marginTop: 0, marginRight: 0 }}>
             <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => Actions.story()}>
               <View style={styles.newsContent}>
@@ -275,11 +201,15 @@ class Home extends Component {
 function bindAction(dispatch) {
   return {
     openDrawer: () => dispatch(openDrawer()),
+    loadNotificationsRequest: (accessToken) => dispatch(loadNotificationsRequest(accessToken)),
   };
 }
 
 const mapStateToProps = state => ({
+  currentUser: state.login.currentUser,
+ notifications: state.notifications,
   navigation: state.cardNavigation,
 });
 
 export default connect(mapStateToProps, bindAction)(Home);
+
