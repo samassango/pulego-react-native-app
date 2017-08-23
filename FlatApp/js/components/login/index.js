@@ -38,10 +38,17 @@ componentWillMount(){
     this.setState({deviceId:Constants.deviceId});
 }
     authenticateUser(){
+        let isLoading = true;
+        this.setState({ 
+            isLogging:isLoading, 
+        });
+        console.log("LocalState1",this.state)
         if(this.validateInputs()){
-            console.log("user logging in!!!!",this.props.login.currentUser)
+            
+            console.log("user logging in!!!!",this.props.login.currentUser);
+            
            this.props.loadAuthenticationRequest(this.state.username, this.state.password,this.state.deviceId);
-           this.setState({isLogging:false});
+           //this.setState({isLogging:false});
                 this.setState({
                    errorMessage:(this.props.login.loginError.hasOwnProperty("error"))?this.props.login.loginError.error.message :'',
                 });
@@ -74,6 +81,7 @@ validateInputs(){
       console.log("login",this.props.login);
        console.log("DEVICE_ID", Constants.deviceId, Constants.deviceName);
       console.log('localState', this.state)
+      console.log("this.state.isLogging ",this.state.isLogging )
       let errorMessage = (this.props.login.loginError.hasOwnProperty("error"))? this.props.login.loginError.error.message : '';
     return (
       <Container>
@@ -108,19 +116,18 @@ validateInputs(){
               </Item>
               
                 <Text style={Platform.OS === 'android' ? { fontSize: 16, textAlign: 'center',color:'red', top: -5 } : { fontSize: 16, fontWeight: '900' }}>{this.state.errorMessage}</Text>
-              
-           <View>
-              {( this.state.isLogging )? <Spinner />:<Text>{errorMessage}</Text>
-              }
-           </View>
+         
               <Button
                 rounded primary block large
                 style={styles.loginBtn}
-                onPress={this.authenticateUser.bind(this)}
-              >
+                onPress={this.authenticateUser.bind(this)}>
                 <Text style={Platform.OS === 'android' ? { fontSize: 16, textAlign: 'center', top: -5 } : { fontSize: 16, fontWeight: '900' }}>Login</Text>
               </Button>
-
+     
+           <View>
+              {( this.state.isLogging === true)? <Spinner />:<Text>{errorMessage}</Text>
+              }
+           </View>
               <View style={styles.otherLinksContainer}>
                 <Left>
                   <Button transparent style={{ alignSelf: 'flex-start' }} onPress={() => Actions.signUp()}>

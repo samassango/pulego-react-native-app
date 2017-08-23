@@ -29,7 +29,7 @@ class Channels extends Component {
   }
 
   render() {
-
+clearInterval();
     return (
       <Container>
         <Header>

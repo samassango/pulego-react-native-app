@@ -19,7 +19,7 @@ export function reportIncidents(params,accessToken){
         }).then((response) => response.json())
              .then((responseJson)=>{
              console.log('incidentResponse',responseJson)
-            dispatch(loadIncidentReportSuccess(reportResponse));
+            dispatch(loadIncidentReportSuccess(responseJson));
          });
 
         }catch(error){

@@ -5,7 +5,9 @@ import { Image, View, TouchableOpacity, Platform, StyleSheet, PixelRatio } from 
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux'; 
 
-import { Container, Header, Content, Text, Button, Icon, Left, Right, Body, Form, Item, Input, Picker, Textarea, Switch, ListItem, CheckBox,Label, Toast } from 'native-base';
+import { Container, Header, Content, Text, Button, Icon, Left, Right,
+        Body, Form, Item, Input, Picker, Textarea, Switch, ListItem, 
+        CheckBox,Label, Toast, Spinner  } from 'native-base';
 import { Grid, Col } from 'react-native-easy-grid';
 import { openDrawer } from '../../actions/drawer';
 
@@ -28,6 +30,7 @@ class Channel extends Component {
       selectedType: "key1323",
       incidentTypes:[],
       image: null,
+        imageBase64:null,
         description:null,
         descriptionError:null,
         subCategoryId:null,
@@ -41,7 +44,9 @@ class Channel extends Component {
         strAddress:null,
         strAddressError:null,
         reportedBy:'',
+        capturedBy:'user',
         reportedByError:'',
+        isReportIncidents:false,
     };
   }
 
@@ -58,6 +63,8 @@ class Channel extends Component {
             console.log("Yoh yoh yoh I can see the data")
           this._getLocationAsync();
         }
+        
+       
       }
     
     componentDidMount(){
@@ -78,9 +85,10 @@ class Channel extends Component {
             
         }
         
-//        if(this.props.incidents.reportResponse !== null && this.props.incidents.reportResponse.hasOwnProperty("incidentId")){
-//            
+//          if(nextProps.incidents.reportResponse !== null){
+//          Actions.channels();;
 //        }
+        
     }
     
 //    componentDidUpdate(){
@@ -108,13 +116,15 @@ class Channel extends Component {
 _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
-        base64:true,
       aspect: [4, 3],
+      quality:1,
+      base64:true,
+      exif:true,
     });
-       console.log(result);
+       console.log("result",result);
 
     if (!result.cancelled) {
-      this.setState({ image: result.base64 });
+      this.setState({ image: result.uri, imageBase64: result.base64 });
     }
   };
 
@@ -151,42 +161,62 @@ _getLocationByAddressAsync = async () => {
         longitude:jsonLocation.coords.longitude,
         latitude:jsonLocation.coords.latitude, jsonLocation });
   };
-
+_clearInputsForm(){
+    this.setState({
+        showToast: false,
+        accessToken:this.props.currentUser.id,
+      selectedType: "key1323",
+      incidentTypes:[],
+      image: null,
+        imageBase64:null,
+        description:null,
+        descriptionError:null,
+        subCategoryId:null,
+        longitude:'',
+        latitude:'',
+        cantactNo:null,
+        cantactNoError:null,
+        errorMessage:'',
+        locationState:true,
+        jsonLocation:null,
+        strAddress:null,
+        strAddressError:null,
+        reportedBy:'',
+        capturedBy:'user',
+        reportedByError:'',
+        isReportIncidents:false,
+    });
+    return alert("Successful reported\nThanks for your report...") ;
+}
 _postIncidentReport(){
-    Alert.alert(
-  'Alert Title',
-  'My Alert Msg',
-  [
-    {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-    {text: 'OK', onPress: () => console.log('OK Pressed')},
-  ],
-  { cancelable: false }
-)
-    
+    this.setState({isReportIncidents:true})
         let accessToken = this.state.accessToken;
         //"refNumber":'',
-        let params = {"refNumber":'09898',
-                      "areaId":'0',
-                      "regionId":'0',
-                      "channelId":'5981c1bada29000011ee94bc',
-                      "categoryId":  this.props.appState.categoryReducer.selectedCategory.categoryId,
-                      "subCategoryId": this.state.subCategoryId,
+        let params = {"refNumber":new Date().toDateString(),
+                      "region":'599d61b07ceaa900113bbaa8',
+                      "channel":'5981c1bada29000011ee94bc',
+                      "category":  this.props.appState.categoryReducer.selectedCategory.categoryId,
+                      "subCategory": this.state.subCategoryId,
                       "description": this.state.description,
-                      "mobile": 0,
+                      "status": "593c39de022c4aca8604e150",
                       "deviceId": Constants.deviceId,
                       "location": this.state.strAddress,
                       "lat": this.state.latitude,
                       "lot": this.state.longitude,
                       "mobileno": this.state.cantactNo,
                       reportedBy: this.state.reportedBy,
+                       capturedBy:'mobile user',
+                      image:{
+                          imageString:this.state.imageBase64
+                      }
                     }
         if(this._validateInputsFields()){
+            console.log("params",params)
             this.props.reportIncidents(params,accessToken);
         }
 
     
-    return ;
+    return this._clearInputsForm();
 }
 _validateInputsFields(){
     let _isValidInputs = false;
@@ -199,15 +229,16 @@ _validateInputsFields(){
             if(this.state.cantactNo.length !== 10){
                 alert('Error:>>> Phone number cannot be more or less than 10 digits.');
              }else{
-               if(this.state.locationState ===false && this.state.strAddress!== null){
+               if(this.state.locationState ===false && this.state.strAddress=== null){
                    alert('Error:>>> Address cannot be empty.');
                 }else{
-                     _isValidInputsv = true;
+                     _isValidInputs = true;
                 }
             }
          
         } 
     }
+    console.log("_isValidInputs",_isValidInputs)
     return _isValidInputs;
 }
 _onChangeLocationState(){
@@ -224,7 +255,9 @@ _onChangeLocationState(){
        let { image } = this.state;
       
         console.log('ChannelState', this.state);
-     console.log('ChannelProps', this.props.incidents.reportResponse);
+     console.log('reportIncidentResponse', this.props.incidents.reportResponse);
+      
+     
 //      
 //      console.log("Incident Types", this.state.incidentTypes);
 //      
@@ -338,7 +371,8 @@ _onChangeLocationState(){
                       </Button>
                   </Form>
                 </View>
-             
+             <View>
+                 {this.state.isReportIncidents===true && <Spinner color="green"/>}</View>
             </View>
           </Content>
         </Image>
