@@ -11,6 +11,7 @@ This README would normally document whatever steps are necessary to get your app
 ### How do I get set up? ###
 
 * Summary of set up
+To run this application just run `git clone ` the repo and run `npm install` and the after the installaton you can run `npm run android ` or `iso`.
 * Configuration
 * Dependencies
 * Database configuration
