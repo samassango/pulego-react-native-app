@@ -70,18 +70,7 @@ componentDidMount(){
               <Button transparent onPress={() => Actions.pop()}>
                 <Icon active name="arrow-back" style={styles.headerIcons} />
               </Button>
-              <Button transparent onPress={() => Actions.comments()}>
-                <Icon name="chatboxes" style={styles.headerIcons} />
-              </Button>
-              <Button transparent onPress={() => this.modalO()}>
-                <Text style={styles.headerTextIcon}>Aa</Text>
-              </Button>
-              <Button transparent>
-                <Icon name="bookmarks" style={styles.headerIcons} />
-              </Button>
-              <Button transparent>
-                <Icon name="download" style={styles.headerIcons} />
-              </Button>
+            
             </Body>
           </Header>
 
@@ -278,3 +267,16 @@ export default connect(mapStateToProps, bindAction)(Story);
 //                    </View>
 //                  </Swiper>
 //                </View>
+
+//  <Button transparent onPress={() => Actions.comments()}>
+//                <Icon name="chatboxes" style={styles.headerIcons} />
+//              </Button>
+//              <Button transparent onPress={() => this.modalO()}>
+//                <Text style={styles.headerTextIcon}>Aa</Text>
+//              </Button>
+//              <Button transparent>
+//                <Icon name="bookmarks" style={styles.headerIcons} />
+//              </Button>
+//              <Button transparent>
+//                <Icon name="download" style={styles.headerIcons} />
+//              </Button>

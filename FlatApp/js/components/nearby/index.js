@@ -7,6 +7,8 @@ import { Grid, Col } from 'react-native-easy-grid';
 
 import { openDrawer } from '../../actions/drawer';
 
+import { Actions, ActionConst } from 'react-native-router-flux';
+
 import theme from '../../themes/base-theme';
 import styles from './styles';
 
@@ -223,7 +225,16 @@ onRegionChange(region) {
 //}
     return (
         <Container>
-       
+        <View transparent>
+          <Fab
+            direction="down"
+            containerStyle={{ marginTop: 5}}
+            style={{ backgroundColor: '#66cc99' }}
+            position="topLeft"
+            onPress={() => Actions.channels()}>
+            <Icon name="arrow-back" />
+          </Fab>
+        </View>
          <MapView
           provider={undefined}
                     style={{ flex: 1 }}
@@ -278,6 +289,8 @@ onRegionChange(region) {
             <Thumbnail source={hospital} style={styles.iconPic} />
           </TouchableOpacity>
           </Fab>
+       
+      
        </View>
 
  </Container>
