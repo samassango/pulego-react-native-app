@@ -30,6 +30,7 @@ export const apiRequest ={
     reqisterDevice:'/RegisteredDevices',
     tokenRequest:'/Users/:userId/accessTokens',
    notifications: '/Notifications',
+    viewNotification: '/Notifications/:notificationId',
 };
 
 export function googleApiRequest(lat, lon, type, radius, keyword){

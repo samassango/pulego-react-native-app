@@ -8,6 +8,7 @@ import incidents from './incidents';
 import enquires from './enquiries';
 import nearby from './nearby';
 import profile from './profile'
+import notifications from './notifications';
 
 export default combineReducers({
   drawer,
@@ -17,4 +18,5 @@ export default combineReducers({
   enquires,
   nearby,
   profile,
+  notifications,
 });

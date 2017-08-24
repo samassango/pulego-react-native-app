@@ -168,4 +168,9 @@ export default {
     color: primary,
     fontSize: 26,
   },
+    newsTitle: {
+        color: '#666',
+        fontSize: 24,
+        fontWeight: 'bold',
+    },
 };
