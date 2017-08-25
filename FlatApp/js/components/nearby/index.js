@@ -45,6 +45,8 @@ class Nearby extends Component {
             region:null,
             accessToken:'',
         }
+        
+        this._moveBackButton_ClickEvent = this._moveBackOnClick.bind(this);
       }
     
    componentDidMount() {
@@ -177,17 +179,17 @@ onMapPress(e){
 }
 
 _updateMapByPolice(){
-    this.setState({type:'police'});
+    this.setState({type:'police',keyword:'metro'});
     
    return this._updateMapSelectedType(this);
 }
 _updateMapByHospital(){
-    this.setState({type:'hospital'});
+    this.setState({type:'hospital',keyword:'hospital'});
     
    return this._updateMapSelectedType(this);
 }
 _updateMapByFireStation(){
-    this.setState({type:'fire_station'});
+    this.setState({type:'fire_station',keyword:'fire'});
     
    return this._updateMapSelectedType(this);
 }
@@ -196,23 +198,30 @@ onRegionChange(region) {
     console.log("region",region)
   this.setState({ region });
 }
+_moveBackOnClick(e){
+    console.log("this._moveBackButton_ClickEvent")
+    return Actions.channels();
+}
 
+onMarkerListener(e){
+    console.log("this.onMarkerListener")
+}
 
   render() {
     
       
-    console.log("CurrentUser",this.props.currentUser)
+    //console.log("CurrentUser",this.props.currentUser)
    let googlePlaces = this.props.nearbyState.googlePlaces;
-      console.log("googlePlaces",googlePlaces)
+     // console.log("googlePlaces",googlePlaces)
       //console.log("mapDataObject",mapDataObject)
       
       let markerlist=[];
     if(googlePlaces)  
       markerlist = generateMarkerObject(googlePlaces);
       
-      console.log("markerlist",markerlist)
+      //console.log("markerlist",markerlist)
 
-      console.log("State",this.state);
+      //console.log("State",this.state);
       let regionsObject = this._regionFrom(this.state.latitude,this.state.longitude,this.state.accuracy);
       
       let isUpdated = this.state.locationIsUpdated ;
@@ -223,17 +232,28 @@ onRegionChange(region) {
 //         <Content>
 //       </Content>
 //}
+      
+//        <Fab
+//            direction="down"
+//            containerStyle={{ marginTop: 5}}
+//            style={{ backgroundColor: '#00b383' }}
+//            position="topLeft"
+//            onPress={this._moveBackButton_ClickEvent}>
+//            <Icon name="arrow-back" />
+//          </Fab>
+      
     return (
         <Container>
         <View transparent>
           <Fab
             direction="down"
             containerStyle={{ marginTop: 5}}
-            style={{ backgroundColor: '#66cc99' }}
+            style={{ backgroundColor: '#00b383' }}
             position="topLeft"
-            onPress={() => Actions.channels()}>
+            onPress={this._moveBackOnClick.bind(this)}>
             <Icon name="arrow-back" />
           </Fab>
+      
         </View>
          <MapView
           provider={undefined}
@@ -254,7 +274,7 @@ onRegionChange(region) {
           showsTraffic={true}
           loadingIndicatorColor={"#606060"} onPress={(e) => this.onMapPress(e)}>
          {googlePlaces !== null && markerlist.map(marker => {
-          console.log("marker",marker)
+         // console.log("marker",marker)
             return(
             <MapView.Marker
               coordinate={marker.LatLng}
@@ -262,7 +282,7 @@ onRegionChange(region) {
               description={marker.details.vicinity}
              pinColor={"#990000"}
              image ={marker.details.icon}
-            >
+            onPress={()=> this.onMarkerListener.bind(this)}>
                                    
            </MapView.Marker> 
        );})}

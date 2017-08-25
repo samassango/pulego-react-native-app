@@ -1,3 +1,5 @@
+import { SQLite } from 'expo';
+
 export function createTwoDimensionArray(list){
     let twoDArray = [];
     if(list !== undefined){
@@ -78,4 +80,18 @@ export const getAbsoluteApiUrl = (apiUrl, param) =>{
                             });
       }
       return _markerArray;
+  }
+  
+  export function openSQlite(){
+      let db = SQLite.openDatabase("tshwaneMobiSQLite.db");
+      let transaction = db.transaction();
+      let sqlStatement = 'create table tblCaseHistory ( _id integer not null auto_increment, noti_title text,noti_message text, noti_date text)';
+      transaction.excuteSql(sqlStatement, arguments, success, error)
+      db.transaction((transaction)=>{
+          
+      }, (error)=>{
+          
+      }, (success)=>{
+          
+      })
   }

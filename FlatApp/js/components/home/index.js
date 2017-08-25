@@ -49,7 +49,7 @@ componentDidMount(){
                   <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => Actions.story({notificationId:rowItem.id})}>
                   <View style={styles.newsContent}>
                        <Left>
-                         <Thumbnail square size={80} source={{ uri:rowItem.image}} />
+                         <Thumbnail square size={80} source={{ uri:'data:image/jpg;base64,'+rowItem.image}} />
                        </Left>
                       <Body>
                         <Text style={{color: '#666', fontWeight: 'bold',}}>{rowItem.title}</Text>

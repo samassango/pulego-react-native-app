@@ -3,7 +3,7 @@ import { Image, View, TouchableOpacity, Platform, Slider, Dimensions } from 'rea
 import { connect } from 'react-redux';
 
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Content, Text, Button, Icon, Body, Spinner,Left, Right } from 'native-base';
+import { Container, Header, Content, Text, Button, Icon, Body, Spinner,Left, Right, Fab } from 'native-base';
 import { Grid, Col } from 'react-native-easy-grid';
 
 import Lightbox from 'react-native-lightbox';
@@ -43,7 +43,8 @@ class Story extends Component {
       animationType: 'slideInDown',
       open: false,
       value: 0,
-        accessToken: this.props.currentUser.id,
+      accessToken: this.props.currentUser.id,
+      active: 'true'
     };
   }
 
@@ -66,10 +67,13 @@ componentDidMount(){
       <Container style={{ backgroundColor: '#fff' }}>
         <Image source={require('../../../images/glow2.png')} style={styles.container} >
           <Header>
+            <Left>
+               <Button transparent onPress={() => Actions.pop()}>
+                    <Icon active name="arrow-back" style={styles.headerIcons} />
+               </Button>
+            </Left>
             <Body style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-              <Button transparent onPress={() => Actions.pop()}>
-                <Icon active name="arrow-back" style={styles.headerIcons} />
-              </Button>
+              
             
             </Body>
           </Header>
@@ -101,9 +105,24 @@ componentDidMount(){
                       <Text style={styles.newsLink}>{new Date(detailObject.datecaptured).getHours()}h ago</Text>
                     </Col>
                     <Col>
-                      <TouchableOpacity style={styles.newsTypeView}>
-                        <Text style={styles.newsTypeText}>ENVIRONMENT</Text>
-                      </TouchableOpacity>
+                      <Fab
+                        active={this.state.active}
+                        direction="up"
+                        containerStyle={{ }}
+                        style={{ backgroundColor: '#5067FF' }}
+                        position="bottomRight"
+                        onPress={() => this.setState({ active: !this.state.active })}>
+                        <Icon name="share" />
+                        <Button style={{ backgroundColor: '#34A34F' }}>
+                          <Icon name="logo-whatsapp" />
+                        </Button>
+                        <Button style={{ backgroundColor: '#3B5998' }}>
+                          <Icon name="logo-facebook" />
+                        </Button>
+                        <Button disabled style={{ backgroundColor: '#DD5144' }}>
+                          <Icon name="mail" />
+                        </Button>
+                      </Fab>
                     </Col>
                   </Grid>
                   <Text style={styles.newsTitle}>
@@ -280,3 +299,7 @@ export default connect(mapStateToProps, bindAction)(Story);
 //              <Button transparent>
 //                <Icon name="download" style={styles.headerIcons} />
 //              </Button>
+
+//<TouchableOpacity style={styles.newsTypeView}>
+//                        <Text style={styles.newsTypeText}>ENVIRONMENT</Text>
+//                      </TouchableOpacity>
