@@ -1,12 +1,12 @@
 export const apiRequest ={
     sercviceBaseUrl:'https://tshwanesafetyapi.herokuapp.com/api',
     authenticate:{
-        login:'/Users/login',
-        logout:'/Users/logout',
-        profile:'/Users'
+        login:'/TshwaneUsers/login',
+        logout:'/TshwaneUsers/logout',
+        profile:'/TshwaneUsers'
     },
-    createUserAccount:'/Users',
-    createOrReplaceUserAccount:'/Users/replaceOrCreate',
+    createUserAccount:'/TshwaneUsers',
+    createOrReplaceUserAccount:'/TshwaneUsers/replaceOrCreate',
     passwortReset:{
         resetWithEmail:'/Users/reset',
         resetwithResetToken:'/Users/reset-password'
