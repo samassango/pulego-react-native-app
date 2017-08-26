@@ -86,9 +86,9 @@ class Nearby extends Component {
             }
          
         }
-//          if(context.props.nearbyState.statusRequest=== "active"){
-//              clearInterval();
-//          }
+          if(context.props.nearbyState.statusRequest=== "active"){
+              clearInterval();
+          }
           
            console.log("setInterval",context.state);
       },3000);
@@ -189,7 +189,7 @@ _updateMapByHospital(){
    return this._updateMapSelectedType(this);
 }
 _updateMapByFireStation(){
-    this.setState({type:'fire_station',keyword:'fire'});
+    this.setState({type:'fire_station',keyword:'fi'});
     
    return this._updateMapSelectedType(this);
 }
@@ -273,7 +273,7 @@ onMarkerListener(e){
           showsCompass={true}
           showsTraffic={true}
           loadingIndicatorColor={"#606060"} onPress={(e) => this.onMapPress(e)}>
-         {googlePlaces !== null && markerlist.map(marker => {
+         {googlePlaces !== null && markerlist.map((marker,i) => {
          // console.log("marker",marker)
             return(
             <MapView.Marker
@@ -282,7 +282,7 @@ onMarkerListener(e){
               description={marker.details.vicinity}
              pinColor={"#990000"}
              image ={marker.details.icon}
-            onPress={()=> this.onMarkerListener.bind(this)}>
+            onPress={()=> this.onMarkerListener.bind(this)} key={i}>
                                    
            </MapView.Marker> 
        );})}

@@ -44,11 +44,7 @@ class SideBar extends Component {
               <Icon name="ios-timer-outline" />
               <Text style={styles.linkText}>Case History</Text>
             </ListItem>
-            <ListItem button onPress={() => { Actions.profile(); this.props.closeDrawer(); }} iconLeft style={styles.links} >
-              <Icon name="ios-person-outline" />
-              <Text style={styles.linkText}> Profile</Text>
-            </ListItem>
-
+            
             <ListItem button onPress={() => { Actions.nearby(); this.props.closeDrawer(); }} iconLeft style={styles.links} >
               <Icon name="ios-pin-outline" />
               <Text style={styles.linkText}>Nearby Service</Text>
@@ -57,6 +53,12 @@ class SideBar extends Component {
               <Icon name="ios-contacts-outline" />
               <Text style={styles.linkText}>Emergency Contacts</Text>
             </ListItem>
+
+            <ListItem button onPress={() => { Actions.profile(); this.props.closeDrawer(); }} iconLeft style={styles.links} >
+              <Icon name="ios-person-outline" />
+              <Text style={styles.linkText}> Profile</Text>
+            </ListItem>
+
             <ListItem button onPress={() => { Actions.about(); this.props.closeDrawer(); }} iconLeft style={styles.links}>
               <Icon name="ios-paper-outline" />
               <Text style={styles.linkText}>About</Text>
@@ -75,7 +77,7 @@ class SideBar extends Component {
                   <Col>
                     <TouchableOpacity onPress={() => { Actions.login({ type: ActionConst.RESET  }); this.props.closeDrawer(); }} style={{ alignSelf: 'flex-start' }}>
                       <Text style={{ fontWeight: 'bold', color: '#fff' }}>LOG OUT</Text>
-                      <Text note style={{ color: '#fff' }} >Kumar Sanket</Text>
+                      <Text note style={{ color: '#fff' }} >Sibusiso Massango</Text>
                     </TouchableOpacity>
                   </Col>
                   <Col>
