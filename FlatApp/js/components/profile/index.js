@@ -17,7 +17,7 @@ import * as actions from '../../actions/profileAction';
 class Profile extends Component {
 componentDidMount(){
     console.log("currentUser",this.props.currentUser);
-    this.props.loadProfileRequest(this.props.currentUser.id);
+    this.props.loadProfileRequest(this.props.currentUser.id,this.props.currentUser.userId);
 }
   static propTypes = {
     navigation: React.PropTypes.shape({
@@ -36,14 +36,17 @@ componentDidMount(){
           <Content showsVerticalScrollIndicator={false}>
             <View style={styles.profileInfoContainer}>
               <TouchableOpacity style={{ alignSelf: 'center' }}>
-                <Thumbnail source={require('../../../images/contacts/sanket.png')} style={styles.profilePic} />
+                <Thumbnail source={require('../../../images/contacts/profilePicture.png')} style={styles.profilePic} />
               </TouchableOpacity>
               <View style={styles.profileInfo}>
                 <TouchableOpacity>
-                  <Text style={styles.profileUser}>Kumar Sanket</Text>
+                  <Text style={styles.profileUser}>{this.props.profile.profile !==null ? this.props.profile.profile.fullname: ''}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity>
-                  <Text note style={styles.profileUserInfo}>CEO, GeekyAnts</Text>
+                  <Text note style={styles.profileUserInfo}>Contact no: {this.props.profile.profile !==null ? this.props.profile.profile.mobileno: ''}</Text>
+                </TouchableOpacity>
+                 <TouchableOpacity>
+                  <Text note style={styles.profileUserInfo}>Email address : {this.props.profile.profile !==null ? this.props.profile.profile.email: ''}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -58,7 +61,7 @@ componentDidMount(){
 function bindAction(dispatch) {
   return {
     openDrawer: () => dispatch(openDrawer()),
-    loadProfileRequest: (accessToken) => dispatch(actions.loadProfileRequest(accessToken))
+    loadProfileRequest: (accessToken, userId) => dispatch(actions.loadProfileRequest(accessToken, userId))
   };
 }
 

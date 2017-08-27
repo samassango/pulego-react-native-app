@@ -7,7 +7,7 @@ import { Actions, ActionConst } from 'react-native-router-flux';
 import { Container, Content, Text, Icon, List, ListItem, Thumbnail } from 'native-base';
 import { Grid, Col } from 'react-native-easy-grid';
 import { closeDrawer } from '../../actions/drawer';
-
+import * as actions from '../../actions/profileAction';
 
 import styles from './style';
 
@@ -19,6 +19,7 @@ class SideBar extends Component {
       key: React.PropTypes.string,
     }),
   }
+
 
   render() {
       
@@ -77,12 +78,12 @@ class SideBar extends Component {
                   <Col>
                     <TouchableOpacity onPress={() => { Actions.login({ type: ActionConst.RESET  }); this.props.closeDrawer(); }} style={{ alignSelf: 'flex-start' }}>
                       <Text style={{ fontWeight: 'bold', color: '#fff' }}>LOG OUT</Text>
-                      <Text note style={{ color: '#fff' }} >Sibusiso Massango</Text>
+                      <Text note style={{ color: '#fff' }} >{this.props.profile.profile !==null ? this.props.profile.profile.fullname: ''}</Text>
                     </TouchableOpacity>
                   </Col>
                   <Col>
                     <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => { Actions.profile(); this.props.closeDrawer(); }}>
-                      <Thumbnail source={require('../../../images/contacts/sanket.png')} style={styles.profilePic} />
+                      <Thumbnail source={require('../../../images/contacts/profilePicture.png')} style={styles.profilePic} />
                     </TouchableOpacity>
                   </Col>
                 </Grid>
@@ -123,6 +124,7 @@ function bindAction(dispatch) {
 
 const mapStateToProps = state => ({
   navigation: state.cardNavigation,
+  profile: state.profile,
 });
 
 export default connect(mapStateToProps, bindAction)(SideBar);

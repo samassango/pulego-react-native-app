@@ -133,14 +133,14 @@ validateInputs(){
                 <Left>
                   <Button transparent style={{ alignSelf: 'flex-start' }} onPress={() => Actions.signUp()}>
                     <Text style={styles.helpBtns}>
-                          Create Account
+                          Sign up
                       </Text>
                   </Button>
                 </Left>
                 <Right>
                   <Button transparent style={{ alignSelf: 'flex-end' }} onPress={() => Actions.needhelp()}>
                     <Text style={styles.helpBtns}>
-                          Need Help?
+                          forgot password?
                       </Text>
                   </Button>
                 </Right>

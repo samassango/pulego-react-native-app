@@ -9,18 +9,19 @@ export function loadProfileError(error){
     return{type:'LOAD_PROFILE_REQUEST_ERROR',error}
 }
 
-export function loadProfileRequest(accessToken){
+export function loadProfileRequest(accessToken, userId){
     
     return function (dispatch){
         let requestUrl = apiRequest.sercviceBaseUrl+apiRequest.authenticate.profile; 
       // "Authorization": "Bearer " + accessToken,+'?access_token='+accessToken
+        let sourceRequestUrl = getAbsoluteApiUrl(requestUrl,{id:userId})+'?access_token='+accessToken;
         try{
-           console.log("accessToken",requestUrl)
-        return fetch(requestUrl, {
+           console.log("sourceRequestUrl",sourceRequestUrl)
+             console.log("accessToken",accessToken)
+        return fetch(sourceRequestUrl, {
                   method: "GET",
                   headers: {
                     "Content-Type": "application/json",
-                       "Authorization": "Bearer " + accessToken,
                   }}).then((response) => response.json())
              .then((responseJson)=>{
              console.log('Profile',responseJson)

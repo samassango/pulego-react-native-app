@@ -19,6 +19,7 @@ export function loadSignupRequest(params){
         let requestUrl = apiRequest.sercviceBaseUrl+apiRequest.createUserAccount; 
     
         console.log("requestUrl",requestUrl)
+        console.log("params",params)
         try{
         
         return fetch(requestUrl, {

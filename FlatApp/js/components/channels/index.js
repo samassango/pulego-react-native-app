@@ -19,6 +19,7 @@ import CustomTabBar from './CustomTabBar';
 const headerLogo = require('../../../images/Header-Logo.png');
 
 import { loadCategoriesRequest } from '../../actions/categoryAction';
+import * as actions from '../../actions/profileAction';
 
 class Channels extends Component {
 
@@ -27,7 +28,10 @@ class Channels extends Component {
       key: React.PropTypes.string,
     }),
   }
-
+componentDidMount(){
+    console.log("currentUser",this.props.currentUser);
+    this.props.loadProfileRequest(this.props.currentUser.id,this.props.currentUser.userId);
+}
   render() {
 clearInterval();
     return (
@@ -72,12 +76,13 @@ clearInterval();
 function bindAction(dispatch) {
   return {
     openDrawer: () => dispatch(openDrawer()),
-      //loadCategoriesRequest: () => dispatch(loadCategoriesRequest()),
+    loadProfileRequest: (accessToken, userId) => dispatch(actions.loadProfileRequest(accessToken, userId)),
   };
 }
 
 const mapStateToProps = state => ({
   navigation: state.cardNavigation,
+     currentUser: state.login.currentUser,
 });
 
 export default connect(mapStateToProps, bindAction)(Channels);

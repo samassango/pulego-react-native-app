@@ -3,13 +3,13 @@ export const apiRequest ={
     authenticate:{
         login:'/TshwaneUsers/login',
         logout:'/TshwaneUsers/logout',
-        profile:'/TshwaneUsers'
+        profile:'/TshwaneUsers/:id'
     },
     createUserAccount:'/TshwaneUsers',
     createOrReplaceUserAccount:'/TshwaneUsers/replaceOrCreate',
     passwortReset:{
-        resetWithEmail:'/Users/reset',
-        resetwithResetToken:'/Users/reset-password'
+        resetWithEmail:'/TshwaneUsers/reset',
+        resetwithResetToken:'/TshwaneUsers/reset-password'
     },
     categories:{
     list:'/Categories',

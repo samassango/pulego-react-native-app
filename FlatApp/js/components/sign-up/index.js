@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import { Image, TouchableOpacity, StatusBar } from 'react-native';
+import { Image, TouchableOpacity, StatusBar, Alert } from 'react-native';
 import { connect } from 'react-redux';
 
 import { Actions } from 'react-native-router-flux';
 
-import { Container, Content, Text, Button, Icon, Item, Input, View } from 'native-base';
+import { Container, Content, Text, Button, Icon, Item, Input, View, Spinner } from 'native-base';
 
 import styles from './styles';
 import commonColor from '../../../native-base-theme/variables/commonColor';
 
 import { loadSignupRequest } from '../../actions/signupAction';
+
+import { validateEmail } from '../../utils/utilsHelper';
 
 class SignUp extends Component {
 
@@ -20,9 +22,12 @@ class SignUp extends Component {
         x: 0,
         y: 0,
       },
+        fullname:'',
+        mobileNo:'',
         username:'',
         email:'',
         password:'',
+        confirmPassword:'',
         errorMessage:'',
         isloading:false,
     };
@@ -32,26 +37,68 @@ class SignUp extends Component {
   }
 
 _createAccount(){
-    if(this.state.username){
-        if(this.state.email){
-              if(this.state.password){
-                  this.setState({isloading: true});
-               return this.props.loadSignupRequest({username: this.state.username, password: this.state.password, email: this.state.email })
-              } else
-                this.setState({errorMessage: 'please enter your password.'})
-        }else{
-             this.setState({errorMessage: 'please enter your email.'})
-        }
-    }else{
-             this.setState({errorMessage: 'please enter your username.'})
-    }           
+if(this.state.fullname){
+        if(this.state.mobileNo){
+               if(this.state.email){
+                    if(validateEmail(this.state.email)){
+                        if(this._confirmPassword()){
+                            this.setState({isloading: true});
+                            return this.props.loadSignupRequest({fullname: this.state.fullname,username: this.state.email, password: this.state.password, email: this.state.email,mobileno: this.state.mobileNo })
+                        } 
+                    }else{
+                            Alert.alert("Error: Invalid Email",
+                               "Please enter your valid email.",
+                               [
+                                 {text:'ok'},
+                               ]);
+                    }
+                                //this.setState({errorMessage: 'please enter your password.'})
+                }else{
+                         Alert.alert("Error: Email",
+                               "Please enter your email.",
+                               [
+                                 {text:'ok'},
+                               ]);
+                             //this.setState({errorMessage: 'please enter your email.'})
+                        }
+                     
+               }else{
+                          Alert.alert("Error: Contact number",
+                           "Please enter your cantact number.",
+                           [
+                             {text:'ok'},
+                           ]);
+               }
+          
+       }else{
+             Alert.alert("Error: fullname",
+                           "Please enter your fullname.",
+                           [
+                             {text:'ok'},
+                           ]);
+       }
+   
          
 }
+    _confirmPassword(){
+        let passwordMatch = false;
+        if(this.state.password=== this.state.confirmPassword)
+            passwordMatch=true;
+        else 
+            Alert.alert("Error",
+           "Password missmatch!",
+           [
+             {text:'ok'},
+           ]);
+        
+        return passwordMatch;
+    }
   render() {
-    if(this.props.state.newUser !== null){
+    if(this.props.state.newUser === null){
      console.log("newUser",this.props.state.newUser)
     Actions.login();
     }
+     
     return (
       <Container>
         <StatusBar
@@ -64,19 +111,29 @@ _createAccount(){
                                     CREATE ACCOUNT
                                 </Text>
             <View style={styles.signupContainer}>
-              <Item rounded style={styles.inputGrp}>
+            <Item rounded style={styles.inputGrp}>
                 <Icon name="person" />
                 <Input
-                  placeholder="Username" style={styles.input}
+                  placeholder="Enter your fullname" style={styles.input}
                   placeholderTextColor="#FFF"
-                  onChangeText={username => this.setState({ username })}
+                  onChangeText={fullname => this.setState({ fullname })}
+                />
+              </Item>
+             
+             <Item rounded style={styles.inputGrp}>
+                <Icon name="person" />
+                <Input
+                  placeholder="Enter mobile number" style={styles.input}
+                  keyboardType = 'numeric' maxLength={10}  minLength={10}
+                  placeholderTextColor="#FFF"
+                  onChangeText={mobileNo => this.setState({ mobileNo })}
                 />
               </Item>
 
               <Item rounded style={styles.inputGrp}>
                 <Icon name="mail-open" />
                 <Input
-                  placeholder="Email" style={styles.input}
+                  placeholder="Enter your email" style={styles.input}
                   placeholderTextColor="#FFF"
                   onChangeText={email => this.setState({ email })}
                 />
@@ -85,9 +142,18 @@ _createAccount(){
               <Item rounded style={styles.inputGrp}>
                 <Icon name="unlock" />
                 <Input
-                  placeholder="Password" secureTextEntry style={styles.input}
+                  placeholder="Enter password" secureTextEntry style={styles.input}
                   placeholderTextColor="#FFF"
                   onChangeText={password => this.setState({ password })}
+                />
+              </Item>
+
+             <Item rounded style={styles.inputGrp}>
+                <Icon name="unlock" />
+                <Input
+                  placeholder="Confirm password" secureTextEntry style={styles.input}
+                  placeholderTextColor="#FFF"
+                  onChangeText={confirmPassword => this.setState({ confirmPassword })}
                 />
               </Item>
 
