@@ -126,4 +126,25 @@ iconPic: {
     width: 40,
     borderRadius: Platform.OS === 'android' ? 40 : 20,
   },
+contentIconsContainer: {
+    paddingTop: 30,
+    paddingLeft: 50,
+    paddingRight: 50,
+    paddingButtom: 20,
+  },
+  roundedButton: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    borderRadius: 30,
+    width: 60,
+    height: 60,
+  }, 
+    markerCallout:{
+        flex: 3,
+       height:  (deviceHeight / 3),
+       width: Dimensions.get('window').width -40,
+       alignItems: 'center',
+       backgroundColor: primary,
+    }
 };

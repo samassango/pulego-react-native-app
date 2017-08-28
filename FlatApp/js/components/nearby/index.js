@@ -22,9 +22,22 @@ import { mapDataObject } from './mocker';
 
 import * as actions from '../../actions/nearbyAction';
 
+import MarkerView from './markerView';
+
 const police = require('../../../images/mapIcon/police.png');
 const hospital = require('../../../images/mapIcon/hospital.png');
 const fire = require('../../../images/mapIcon/fire.png');
+
+const stylesMap = StyleSheet.create({
+  container: {
+    ...StyleSheet.absoluteFillObject,
+    top: 50,
+    justifyContent: 'flex-end'
+  },
+  map: {
+     ...StyleSheet.absoluteFillObject,
+  },
+});
 
 class Nearby extends Component {
     
@@ -241,23 +254,37 @@ onMarkerListener(e){
 //            onPress={this._moveBackButton_ClickEvent}>
 //            <Icon name="arrow-back" />
 //          </Fab>
+//          <View transparent>
+//          <Fab
+//            direction="down"
+//            containerStyle={{ marginTop: 5}}
+//            style={{ backgroundColor: '#00b383' }}
+//            position="topLeft"
+//            onPress={this._moveBackOnClick.bind(this)}>
+//            <Icon name="arrow-back" />
+//          </Fab>
+//      
+//        </View>
       
     return (
         <Container>
-        <View transparent>
-          <Fab
-            direction="down"
-            containerStyle={{ marginTop: 5}}
-            style={{ backgroundColor: '#00b383' }}
-            position="topLeft"
-            onPress={this._moveBackOnClick.bind(this)}>
-            <Icon name="arrow-back" />
-          </Fab>
-      
-        </View>
+           <Header>
+            <Left>
+              <Button transparent onPress={() => Actions.channels()}>
+                <Icon active name="arrow-back" />
+              </Button>
+            </Left>
+           
+            <Right>
+              <Button transparent onPress={this.props.openDrawer} >
+                <Icon active name="menu" />
+              </Button>
+            </Right>
+          </Header>
+    <View style={stylesMap.container}>
          <MapView
           provider={undefined}
-                    style={{ flex: 1 }}
+                    style={stylesMap.map}
                     initialRegion={{
                       latitude: regionsObject.latitude,
                       longitude: regionsObject.longitude,
@@ -273,17 +300,18 @@ onMarkerListener(e){
           showsCompass={true}
           showsTraffic={true}
           loadingIndicatorColor={"#606060"} onPress={(e) => this.onMapPress(e)}>
+              
          {googlePlaces !== null && markerlist.map((marker,i) => {
          // console.log("marker",marker)
             return(
             <MapView.Marker
               coordinate={marker.LatLng}
-              title={marker.details.name}
-              description={marker.details.vicinity}
-             pinColor={"#990000"}
-             image ={marker.details.icon}
-            onPress={()=> this.onMarkerListener.bind(this)} key={i}>
-                                   
+             pinColor={"#990000"} key={i}>
+            <MapView.Callout>
+                    <MarkerView   
+                      title={marker.details.name}
+                      description={marker.details.vicinity}/>
+             </MapView.Callout>
            </MapView.Marker> 
        );})}
           </MapView>
@@ -312,6 +340,7 @@ onMarkerListener(e){
        
       
        </View>
+</View>
 
  </Container>
     );
@@ -340,3 +369,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, bindAction)(Nearby);
+
