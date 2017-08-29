@@ -264,7 +264,9 @@ onMarkerListener(e){
 //            <Icon name="arrow-back" />
 //          </Fab>
 //      
+    
 //        </View>
+      const currentVicinity = this.state.latitude+","+this.state.longitude;
       
     return (
         <Container>
@@ -310,7 +312,8 @@ onMarkerListener(e){
             <MapView.Callout>
                     <MarkerView   
                       title={marker.details.name}
-                      description={marker.details.vicinity}/>
+                      description={marker.details.vicinity}
+                       currentVicinity = {currentVicinity}/>
              </MapView.Callout>
            </MapView.Marker> 
        );})}

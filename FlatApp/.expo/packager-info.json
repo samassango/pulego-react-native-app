@@ -1,7 +1,7 @@
 {
   "packagerPort": 19001,
   "packagerPid": 3356,
-  "expoServerPort": 19000,
+  "expoServerPort": null,
   "expoServerNgrokUrl": "https://73-qyf.samassango.flatapp.exp.direct",
   "packagerNgrokUrl": "https://packager.73-qyf.samassango.flatapp.exp.direct",
   "ngrokPid": 3088

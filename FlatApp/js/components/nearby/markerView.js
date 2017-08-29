@@ -6,6 +6,7 @@ import { Container, Header, Content, Text, Button, Icon, Left, Right, Fab, Body,
 import { Grid, Col } from 'react-native-easy-grid';
 
 import { openDrawer } from '../../actions/drawer';
+import * as actions from '../../actions/nearbyAction';
 
 import theme from '../../themes/base-theme';
 import styles from './styles';
@@ -22,7 +23,10 @@ class MarkerView extends Component {
         this.state = {
             title:'',
             description:'',
+            currentVicinity:'',
+            destinationVicinity:'',
         }
+          this._initiateMapNavigation = this._initiateMapNavigation.bind(this);
       }
     
       componentDidMount() {
@@ -31,8 +35,16 @@ class MarkerView extends Component {
             description:this.props.description,
         });
       }
+    _initiateCall(){
+        
+    }
+    _initiateMapNavigation(){
+        return this.props.loadGoogleDirectionRequest(this.state.currentVicinity,this.state.destinationVicinity);
+    }
 
   render() {
+      
+      console.log("currentVicinity",currentVicinity);
      
       return(
           <View>  
@@ -66,6 +78,7 @@ class MarkerView extends Component {
 
 function bindAction(dispatch) {
   return {
+      loadGoogleDirectionRequest:(currentVicinity,destinationVicinity) => dispatch(actions.loadGoogleDirectionRequest(currentVicinity,destinationVicinity)),
   };
 }
 const mapStateToProps = state => ({

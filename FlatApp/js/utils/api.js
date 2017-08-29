@@ -39,3 +39,8 @@ export function googleApiRequest(lat, lon, type, radius, keyword){
     return googlePlaces;
 }
 
+export function googleApiDirectionsRequest(yourVicinityLocation,yourDestinationVicinity){
+    let googleDirection = 'https://maps.googleapis.com/maps/api/directions/json?origin='+yourVicinityLocation+'&destination='+yourDestinationVicinity+'&key=AIzaSyBlPw7OtX7_n2qXvJjGpztklBM52okqRkE';
+    return googleDirection;
+}
+
