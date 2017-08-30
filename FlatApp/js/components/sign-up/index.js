@@ -43,7 +43,7 @@ if(this.state.fullname){
                     if(validateEmail(this.state.email)){
                         if(this._confirmPassword()){
                             this.setState({isloading: true});
-                            return this.props.loadSignupRequest({fullname: this.state.fullname,username: this.state.email, password: this.state.password, email: this.state.email,mobileno: this.state.mobileNo })
+                            return this.props.loadSignupRequest({payNumber:'',fullname: this.state.fullname,username: this.state.email, password: this.state.password, email: this.state.email,mobileno: this.state.mobileNo })
                         } 
                     }else{
                             Alert.alert("Error: Invalid Email",
@@ -94,7 +94,7 @@ if(this.state.fullname){
         return passwordMatch;
     }
   render() {
-    if(this.props.state.newUser === null){
+    if(this.props.state.newUser !== null){
      console.log("newUser",this.props.state.newUser)
     Actions.login();
     }
@@ -108,8 +108,9 @@ if(this.state.fullname){
         <Image source={require('../../../images/BG-signUp.png')} style={styles.background} >
           <Content padder>
             <Text style={styles.signupHeader}>
-                                    CREATE ACCOUNT
+                                   Join Tshwane Safety
                                 </Text>
+             <Text note>{"-By Signing up, you agree to our Terms of Use.\n You will receive an email to verify your account once you have created an account"}</Text>
             <View style={styles.signupContainer}>
             <Item rounded style={styles.inputGrp}>
                 <Icon name="person" />

@@ -142,7 +142,7 @@ contentIconsContainer: {
   }, 
     markerCallout:{
         flex: 3,
-       height:  (deviceHeight / 3),
+       height:  (deviceHeight / 3)-4,
        width: Dimensions.get('window').width -40,
        alignItems: 'center',
        backgroundColor: primary,

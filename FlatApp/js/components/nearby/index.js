@@ -176,6 +176,7 @@ _regionFrom(lat, lon, accuracy) {
     const oneDegreeOfLongitudeInMeters = 111.32 * 1000;
     const circumference = (40075 / 360) * 1000;
 
+
     const latDelta = accuracy * (1 / (Math.cos(lat) * circumference));
     const lonDelta = (accuracy / oneDegreeOfLongitudeInMeters);
 
@@ -276,7 +277,11 @@ onMarkerListener(e){
                 <Icon active name="arrow-back" />
               </Button>
             </Left>
-           
+            <body>
+               <Item>
+                    <Text>Near by services</Text>
+               </Item>
+            </body>
             <Right>
               <Button transparent onPress={this.props.openDrawer} >
                 <Icon active name="menu" />
@@ -294,7 +299,8 @@ onMarkerListener(e){
                       longitudeDelta: regionsObject.longitudeDelta,
                     }}
            onRegionChange={this.onRegionChange.bind(this)}
-          minZoomLevel ={0}
+          minZoomLevel ={10}
+        maxZoomLevel={20}
           loadingEnabled = {true}
           mapType={"standard"}
           showsUserLocation={true}

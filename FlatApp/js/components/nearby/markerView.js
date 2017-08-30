@@ -25,26 +25,37 @@ class MarkerView extends Component {
             description:'',
             currentVicinity:'',
             destinationVicinity:'',
+            result:'',
         }
-          this._initiateMapNavigation = this._initiateMapNavigation.bind(this);
+          this._initiateMapNavigation = this._handlePressMapNavigationAsync.bind(this);
+          this._initiateCall = this._initiateCall.bind(this);
       }
     
       componentDidMount() {
         this.setState({
             title:this.props.title,
             description:this.props.description,
+            currentVicinity: this.props.currentVicinity,
+            destinationVicinity:this.props.description,
         });
       }
     _initiateCall(){
-        
+        console.log("Intiate a call")
     }
     _initiateMapNavigation(){
+        console.log("Intiate a Navigation")
         return this.props.loadGoogleDirectionRequest(this.state.currentVicinity,this.state.destinationVicinity);
     }
+    
+    _handlePressMapNavigationAsync = async () => {
+    let result = await WebBrowser.openBrowserAsync('https://maps.google.com/?saddr=My%20Location&daddr='+this.state.destinationVicinity);
+    this.setState({ result });
+  };
 
   render() {
       
-      console.log("currentVicinity",currentVicinity);
+      console.log("currentState",this.state);
+      
      
       return(
           <View>  
@@ -57,12 +68,12 @@ class MarkerView extends Component {
                     <View style={styles.contentIconsContainer}>
                           <Grid>
                             <Col>
-                              <Button transparent style={styles.roundedButton}>
+                              <Button transparent style={styles.roundedButton} onPress={this._initiateCall}>
                                 <Icon name="ios-call-outline" style={{ fontSize: 30, width: 30, color: '#FFF' }} />
                               </Button>
                             </Col>
                             <Col>
-                              <Button transparent style={styles.roundedButton}>
+                              <Button transparent style={styles.roundedButton} onPress={this._initiateMapNavigation}>
                                 <Icon name="ios-arrow-round-up-outline" style={{ fontSize: 30, width: 30, color: '#FFF' }} />
                               </Button>
                             </Col>
