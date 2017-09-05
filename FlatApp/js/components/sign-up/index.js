@@ -110,7 +110,7 @@ if(this.state.fullname){
             <Text style={styles.signupHeader}>
                                    Join Tshwane Safety
                                 </Text>
-             <Text note>{"-By Signing up, you agree to our Terms of Use.\n You will receive an email to verify your account once you have created an account"}</Text>
+             <Text style={{color:'#FFF'}} note>{"-By Signing up, you agree to our Terms of Use.\n You will receive an email to verify your account once you have created an account"}</Text>
             <View style={styles.signupContainer}>
             <Item rounded style={styles.inputGrp}>
                 <Icon name="person" />
@@ -124,7 +124,7 @@ if(this.state.fullname){
              <Item rounded style={styles.inputGrp}>
                 <Icon name="person" />
                 <Input
-                  placeholder="Enter mobile number" style={styles.input}
+                  placeholder="Enter your mobile number" style={styles.input}
                   keyboardType = 'numeric' maxLength={10}  minLength={10}
                   placeholderTextColor="#FFF"
                   onChangeText={mobileNo => this.setState({ mobileNo })}
@@ -143,7 +143,7 @@ if(this.state.fullname){
               <Item rounded style={styles.inputGrp}>
                 <Icon name="unlock" />
                 <Input
-                  placeholder="Enter password" secureTextEntry style={styles.input}
+                  placeholder="Enter your password" secureTextEntry style={styles.input}
                   placeholderTextColor="#FFF"
                   onChangeText={password => this.setState({ password })}
                 />
@@ -152,7 +152,7 @@ if(this.state.fullname){
              <Item rounded style={styles.inputGrp}>
                 <Icon name="unlock" />
                 <Input
-                  placeholder="Confirm password" secureTextEntry style={styles.input}
+                  placeholder="Confirm your password" secureTextEntry style={styles.input}
                   placeholderTextColor="#FFF"
                   onChangeText={confirmPassword => this.setState({ confirmPassword })}
                 />

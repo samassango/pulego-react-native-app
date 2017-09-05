@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {  StyleSheet, Image, View, Platform, TouchableOpacity } from 'react-native';
 
-import { Container, Header, Content, Text, Button, Icon, Left, Right, Fab, Body, Thumbnail } from 'native-base';
+import { Container, Header, Content, Text, Button, Icon, Left, Right, Fab, Body, Form, Thumbnail } from 'native-base';
 import { Grid, Col } from 'react-native-easy-grid';
 
 import { openDrawer } from '../../actions/drawer';
@@ -57,8 +57,7 @@ class MarkerView extends Component {
       console.log("currentState",this.state);
       
      
-      return(
-          <View>  
+      return(  
           <Image source={require('../../../images/BG-signUp.png')} style={styles.markerCallout} >
               <Content showsVerticalScrollIndicator={false}>
                   <View style={{  alignSelf: 'center',padding:10}}>
@@ -66,22 +65,27 @@ class MarkerView extends Component {
                       <Text style={{ fontSize: 13, fontWeight: 'bold', color: '#FFF'}} note>{this.state.description}</Text>
                   </View>
                     <View style={styles.contentIconsContainer}>
+                         <Form>
                           <Grid>
                             <Col>
-                              <Button transparent style={styles.roundedButton} onPress={this._initiateCall}>
-                                <Icon name="ios-call-outline" style={{ fontSize: 30, width: 30, color: '#FFF' }} />
-                              </Button>
+                               <TouchableOpacity  onPress={this._initiateCall.bind(this)}>
+                                  <Button transparent style={styles.roundedButton}>
+                                    <Icon name="ios-call-outline" style={{ fontSize: 30, width: 30, color: '#FFF' }} />
+                                 </Button>
+                               </TouchableOpacity>
                             </Col>
                             <Col>
-                              <Button transparent style={styles.roundedButton} onPress={this._initiateMapNavigation}>
-                                <Icon name="ios-arrow-round-up-outline" style={{ fontSize: 30, width: 30, color: '#FFF' }} />
-                              </Button>
+                               <TouchableOpacity onPress={this._onPressButton} onPress={this._handlePressMapNavigationAsync.bind(this)}>
+                                  <Button transparent style={styles.roundedButton} >
+                                    <Icon name="ios-arrow-round-up-outline" style={{ fontSize: 30, width: 30, color: '#FFF' }} />
+                                  </Button>
+                               </TouchableOpacity>
                             </Col>
                           </Grid>
+                        </Form>
                     </View>
               </Content>
             </Image>
-          </View>  
       );
   }
 }

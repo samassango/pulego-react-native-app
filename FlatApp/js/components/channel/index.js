@@ -181,7 +181,7 @@ _clearInputsForm(){
         jsonLocation:null,
         strAddress:null,
         strAddressError:null,
-        reportedBy:'',
+        reportedBy:this.props.profile.fulname,
         capturedBy:'user',
         reportedByError:'',
         isReportIncidents:false,
@@ -189,7 +189,7 @@ _clearInputsForm(){
     return alert("Successful reported\nThanks for your report...") ;
 }
 _postIncidentReport(){
-    this.setState({isReportIncidents:true})
+    this.setState({isReportIncidents:true});
         let accessToken = this.state.accessToken;
         //"refNumber":'',
         let params = {"refNumber":new Date().toDateString(),
@@ -213,23 +213,26 @@ _postIncidentReport(){
         if(this._validateInputsFields()){
             console.log("params",params)
             this.props.reportIncidents(params,accessToken);
+             return this._clearInputsForm();
         }
-
-    
-    return this._clearInputsForm();
+   
 }
 _validateInputsFields(){
     let _isValidInputs = false;
     if(!this.state.description){
+        this.setState({isReportIncidents:false});
         alert('Error:>>> Details cannot be empty.');
     }else{
         if(!this.state.cantactNo){
+            this.setState({isReportIncidents:false});
             alert('Error:>>> Phone number cannot be empty.');
         }else{
             if(this.state.cantactNo.length !== 10){
+                this.setState({isReportIncidents:false});
                 alert('Error:>>> Phone number cannot be more or less than 10 digits.');
              }else{
                if(this.state.locationState ===false && this.state.strAddress=== null){
+                   this.setState({isReportIncidents:false});
                    alert('Error:>>> Address cannot be empty.');
                 }else{
                      _isValidInputs = true;
@@ -390,6 +393,7 @@ function bindAction(dispatch) {
 }
 const mapStateToProps = state => ({
   appState: state,
+  profile: state.profile,
   incidents:state.incidents,
   currentUser:state.login,
   navigation: state.cardNavigation,

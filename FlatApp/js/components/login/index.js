@@ -11,7 +11,11 @@ const bg = require('../../../images/BG.png');
 const logo = require('../../../images/logo.png');
 
 import { loadAuthenticationRequest } from '../../actions/loginAction';
-import { Constants } from 'expo';
+import { Constants, SQLite } from 'expo';
+
+import { createTBLLogin, insertSuccessfulLogin } from '../../utils/utilsHelper';
+
+const sqLiteDataSorce = SQLite.openDatabase('tshwaneMobi.db');
 
 class Login extends Component {
 
@@ -36,6 +40,8 @@ class Login extends Component {
   }
 componentWillMount(){
     this.setState({deviceId:Constants.deviceId});
+    
+   createTBLLogin(sqLiteDataSorce);
 }
     authenticateUser(){
         let isLoading = 'Active';
@@ -58,6 +64,9 @@ componentWillMount(){
         
         
     }
+addCurrentLoginUser(params){
+  return insertSuccessfulLogin(params, sqLiteDataSorce);
+}
 validateInputs(){
     this.setState({isLogging:'Active'});
 //    console.log("IsLoading22",this.state.isLogging)
@@ -76,6 +85,14 @@ validateInputs(){
   render() {
       
        if(this.props.login.currentUser !== null){
+           let params = {
+               userId:this.props.login.currentUser.userId,
+               accessToken:this.props.login.currentUser.id,
+               username:this.state.username,
+               seesionId:''
+               
+           }
+           addCurrentLoginUser(params)
             Actions.walkthrough({ username: this.state.username, password: this.state.password }); 
         }
       

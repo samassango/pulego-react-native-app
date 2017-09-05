@@ -1,4 +1,4 @@
-import { SQLite } from 'expo';
+import Expo, { SQLite } from 'expo';
 
 export function createTwoDimensionArray(list){
     let twoDArray = [];
@@ -82,18 +82,83 @@ export const getAbsoluteApiUrl = (apiUrl, param) =>{
       return _markerArray;
   }
   
-  export function openSQlite(){
-      let db = SQLite.openDatabase("tshwaneMobiSQLite.db");
-      let transaction = db.transaction();
-      let sqlStatement = 'create table tblCaseHistory ( _id integer not null auto_increment, noti_title text,noti_message text, noti_date text)';
-      transaction.excuteSql(sqlStatement, arguments, success, error)
-      db.transaction((transaction)=>{
-          
-      }, (error)=>{
-          
-      }, (success)=>{
-          
-      })
+//  export function openSQlite(){
+//      let db = SQLite.openDatabase("tshwaneMobiSQLite.db");
+//      let transaction = db.transaction();
+//      let sqlStatement = 'create table tblCaseHistory ( _id integer not null auto_increment, noti_title text,noti_message text, noti_date text)';
+//      transaction.excuteSql(sqlStatement, arguments, success, error)
+//      db.transaction((transaction)=>{
+//          
+//      }, (error)=>{
+//          
+//      }, (success)=>{
+//          
+//      })
+//  }
+//  
+  
+//export const sqLiteDataSorce = SQLite.openDatabase('tshwaneMobi.db');
+
+export function createTBLLogin(sqLiteDataSorce){
+   console.log("sqLiteDataSorce", sqLiteDataSorce)
+    sqLiteDataSorce.transaction(tx => {
+      tx.executeSql(
+        'create table if not exists tblLogin (id integer primary key not null, accessToken text, userId text, username text, fullname text, email text, seesionId text);'
+      );
+    },
+      (error) =>{
+           console.log( 'error',error);
+          return 'error'+error;
+      },
+      (success) =>{
+          console.log('success',success);
+         return 'success';
+     });
+    
+}
+  
+export function insertSuccessfulLogin(params, sqLiteDataSorce){
+     sqLiteDataSorce.transaction(
+      tx => {
+        tx.executeSql('insert into tblLogin (accessToken, userId, username,seesionId ) values (?, ?, ?, ?)', [params.accessToken, params.userId,params.username, params.sessionId]);
+        tx.executeSql('select * from tblLogin', [], (_, { rows }) =>{
+            return rows;
+          console.log(JSON.stringify(rows))
+        });
+      },
+      (error) =>{
+           console.log( 'error',error);
+          return 'error'+error;
+      },
+      (success) =>{
+          console.log('success',success);
+         return 'success';
+     }
+    );
+}
+
+export function  selectCurrentUser(params, sqLiteDataSorce) {
+    db.transaction(tx => {
+      tx.executeSql(
+        `select * from tblLogin where userId = ?;`,
+        [params.userId],
+        (_, { rows: { _array } }) => {
+            return _array;
+        }
+      );
+    });
+  }
+
+export function  updateCurrentUser(params, sqLiteDataSorce) {
+     db.transaction(
+                tx => {
+                  tx.executeSql(`update items set fullname = `+params.fullname+`,email =`+params.email+` where userId = ?;`, [
+                    params.userId,
+                  ]);
+                },
+                null,
+                null
+              );
   }
   
 export function validateEmail(mail){  

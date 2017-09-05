@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {  StyleSheet, Image, View, Platform, TouchableOpacity } from 'react-native';
-import { Container, Header, Content, Text, Button, Icon, Left, Right, Body, Thumbnail, Fab, Toast, Spinner } from 'native-base';
+import { Container, Header, Content, Text, Button, Icon, Left, Right, Body, Thumbnail, Fab, Toast, Spinner,Item } from 'native-base';
 import { Grid, Col } from 'react-native-easy-grid';
 
 import { openDrawer } from '../../actions/drawer';
@@ -95,11 +95,12 @@ class Nearby extends Component {
                     context.setState({
                         markers: places,
                     });
+                     //clearInterval();
                 }
             }
          
         }
-          if(context.props.nearbyState.statusRequest=== "active"){
+          if(context.props.nearbyState.googlePlaces !== null){
               clearInterval();
           }
           
@@ -108,6 +109,9 @@ class Nearby extends Component {
        
       }
     componentWillReceiveProps(nextProps){
+          if(nextProps.nearbyState.statusRequest=== "active"){
+              clearInterval();
+          }
         console.log("nextProps",nextProps)
     }
 //    componentDidUpdate(){
@@ -180,11 +184,17 @@ _regionFrom(lat, lon, accuracy) {
     const latDelta = accuracy * (1 / (Math.cos(lat) * circumference));
     const lonDelta = (accuracy / oneDegreeOfLongitudeInMeters);
 
-    return {
+//    return {
+//      latitude: lat,
+//      longitude: lon,
+//      latitudeDelta: Math.max(0, latDelta),
+//      longitudeDelta:  Math.max(0, lonDelta)
+//    };
+     return {
       latitude: lat,
       longitude: lon,
-      latitudeDelta: Math.max(0, latDelta),
-      longitudeDelta: Math.max(0, lonDelta)
+      latitudeDelta: 0.22124905707497788,
+      longitudeDelta:  0.15744064003229497
     };
   }
 
@@ -218,7 +228,7 @@ _moveBackOnClick(e){
 }
 
 onMarkerListener(e){
-    console.log("this.onMarkerListener")
+    console.log("this.onMarkerListener",e)
 }
 
   render() {
@@ -277,11 +287,6 @@ onMarkerListener(e){
                 <Icon active name="arrow-back" />
               </Button>
             </Left>
-            <body>
-               <Item>
-                    <Text>Near by services</Text>
-               </Item>
-            </body>
             <Right>
               <Button transparent onPress={this.props.openDrawer} >
                 <Icon active name="menu" />
@@ -299,7 +304,7 @@ onMarkerListener(e){
                       longitudeDelta: regionsObject.longitudeDelta,
                     }}
            onRegionChange={this.onRegionChange.bind(this)}
-          minZoomLevel ={10}
+          minZoomLevel ={0}
         maxZoomLevel={20}
           loadingEnabled = {true}
           mapType={"standard"}
@@ -315,11 +320,11 @@ onMarkerListener(e){
             <MapView.Marker
               coordinate={marker.LatLng}
              pinColor={"#990000"} key={i}>
-            <MapView.Callout>
+            <MapView.Callout tooltip={false}>
                     <MarkerView   
                       title={marker.details.name}
                       description={marker.details.vicinity}
-                       currentVicinity = {currentVicinity}/>
+                      currentVicinity = {currentVicinity}/>
              </MapView.Callout>
            </MapView.Marker> 
        );})}
